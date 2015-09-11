@@ -1,0 +1,69 @@
+Sub trueRank()
+    Dim c As RowCol
+    Dim cMax As RowCol
+    c.col = 5
+    c.row = 4
+    cMax.row = 123
+    cMax.col = 16
+    Dim count1, count2, count3 As Integer
+    Dim k1, k2, k3 As Integer
+    Dim p1, p2, p3 As Integer
+    Dim imInThere As Integer
+    
+    Worksheets("Interactive Stats").Select
+    For i = c.row To cMax.row
+        For j = c.col To cMax.col
+            If Cells(i, j) <> "" Then
+                imInThere = imInThere + 1
+                Dim xp As Variant
+                xp = extractP(i, j, "P")
+                Dim pValue As String
+                count1 = 0
+                count2 = 0
+                count3 = 0
+                For k = 0 To 2
+                    If xp(k) = "1" Then
+                        If count1 < 3 Then
+                            count1 = count1 + 1
+                        End If
+                    End If
+                    If xp(k) = "2" Then
+                        If count2 < 2 Then
+                            count2 = count2 + 1
+                        End If
+                    End If
+                    If xp(k) = "3" Then
+                        If count3 < 1 Then
+                            count3 = count3 + 1
+                        End If
+                    End If
+                Next
+                If count1 = 1 Then
+                    p1 = p1 + 1
+                End If
+                If count1 = 2 Then
+                    p1 = p1 + 1
+                    p2 = p2 + 1
+                End If
+                If count1 = 3 Then
+                    p1 = p1 + 1
+                    p2 = p2 + 1
+                    p3 = p3 + 1
+                End If
+                If count2 = 1 Then
+                    p2 = p2 + 1
+                End If
+                If count2 = 2 Or count2 = 3 Then
+                    p2 = p2 + 1
+                    p3 = p3 + 1
+                End If
+                If count3 > 1 Then
+                    p3 = p3 + 1
+                End If
+            End If
+        Next
+    Next
+    Cells(38, 23) = p1
+    Cells(39, 23) = p2
+    Cells(40, 23) = p3
+    Cells(42, 23) = imInThere
